@@ -5,13 +5,13 @@
 //  Created by Appinventiv Mac on 21/03/18.
 //  Copyright © 2018 Appinventiv Mac. All rights reserved.
 //
-// API weather key : 7e6c32b2c611bee975108ca85e874d6b
+// API weather key : "your key"
 //
-// API weather : https://api.darksky.net/forecast/7e6c32b2c611bee975108ca85e874d6b/37.8267,-122.4233
+// API weather : https://api.darksky.net/forecast/-----key-----/37.8267,-122.4233
 //
-// API Google Places key: AIzaSyAy2f0C6WFb9xOyuh00t0pVqdjbGdcosWk
+// API Google Places key: "your key"
 //
-// API google Places : https://maps.googleapis.com/maps/api/place/textsearch/xml?query=\(query)&key=YOUR_API_KEY
+// API google Places : https://maps.googleapis.com/maps/api/place/textsearch/xml?query=query&key=---YOUR_API_KEY---
 
 import Foundation
 
