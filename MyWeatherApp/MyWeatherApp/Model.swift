@@ -10,11 +10,12 @@ import Foundation
 
 // MARK: MODEL for getting location cordinates
 
-struct Places:Decodable {
-    var results:[Result]
+
+struct Places:Decodable{
+    var results : [Results]
 }
 
-struct Result:Decodable {
+struct Results:Decodable {
     var geometry:Geometry
 }
 
@@ -23,21 +24,24 @@ struct Geometry:Decodable {
 }
 
 struct Location:Decodable {
-    var lat:Int
-    var lng:Int
+    var lat:Float
+    var lng:Float
 }
 
 // MARK: MODEL for getting weather and temperature details
 
+struct Weather : Decodable {
+    var currently : Currently
+}
+
 struct Currently : Decodable {
     
     var summary:String
+    var precipProbability:Float
+    var temperature:Float
+    var apparentTemperature:Float
+    var humidity:Float
+    var windSpeed:Float
+    var uvIndex:Float
     var icon:String
-    var precipProbability:String
-    var temperature:Int
-    var apparentTemperature:Int
-    var humidity:Int
-    var windSpeed:Int
-    var uvIndex:Int
-    
 }

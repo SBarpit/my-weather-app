@@ -23,8 +23,8 @@ import Foundation
 class APIController  {
     
     var places:Places!
-    var location:Currently!
-    var lat,lng:Double!
+    var location:Weather!
+    var lat,lng:String?
     
     
     //MARK: GOOGLE places code
@@ -35,7 +35,6 @@ class APIController  {
         
         request.httpMethod = "GET"
         
-        
         URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
             
             if (error != nil) {
@@ -43,7 +42,7 @@ class APIController  {
                 fail(error!)
             }else{
                 do {
-                    self.places =  try JSONDecoder().decode(Places.self, from: data!)
+                    self.places = try JSONDecoder().decode(Places.self, from: data!)
                     success(self.places)
                 }
                 catch {
@@ -67,40 +66,46 @@ class APIController  {
     // MARK : Weather Forcast Code
     
     
-    func weather(_ location:String,fail: @escaping (String) -> Void, success: @escaping (Currently) -> Void){
+    func weather(_ location:String,fail: @escaping (String) -> Void, success: @escaping (Weather) -> Void){
         
         self.googlePlaces(location, success: { (places) in
-            for i in places.results{
-                self.lat = Double(i.geometry.location.lat)
-                self.lng = Double(i.geometry.location.lng)
-            }
-        }) { (error) in
-            print("Error")
-        }
-        let url = "https://api.darksky.net/forecast/7e6c32b2c611bee975108ca85e874d6b/\(self.lat),\(self.lng)"
-        let bsaeURL = URL(string: url)
-        URLSession.shared.dataTask(with: bsaeURL!, completionHandler: {(data, response, error) -> Void in
+            self.lat = "\(places.results[0].geometry.location.lat)"
+            self.lng = "\(places.results[0].geometry.location.lng)"
+            print(self.lat!)
+            print(self.lng!)
+            let url = "https://api.darksky.net/forecast/7e6c32b2c611bee975108ca85e874d6b/\(self.lat!),\(self.lng!)"
+            let bsaeURL = URL(string: url)
+            URLSession.shared.dataTask(with: bsaeURL!, completionHandler: {(data, response, error) -> Void in
+                
+                if (error != nil) {
+                    fail("Error in Weather fetching")
+                }else{
+                    guard let  data = data else { return }
+                    let s:String = String(data: data, encoding: String.Encoding.ascii)!
+                    print(s)
+                    do {
+                        self.location = try JSONDecoder().decode(Weather.self, from: data)
+                        success(self.location)
+                    }
+                    catch {
+                        print("Error")
+                    }
+                }
+            }).resume()
             
-            if (error != nil) {
-                fail("Error in Weather fetching")
-            }else{
-                do {
-                    self.location =  try JSONDecoder().decode(Currently.self, from: data!)
-                    success(self.location)
-                }
-                catch {
-                    print("Error")
-                }
-            }
-        }).resume()
-    }
-   
+            
+        }) { (error) in
+            fail("Error in Location fetching")
+        }
+        
     }
     
-    
+}
 
 
-    
-   
-    
+
+
+
+
+
 
