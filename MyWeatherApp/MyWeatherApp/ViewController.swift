@@ -55,7 +55,7 @@ extension ViewController:UISearchBarDelegate{
                 self.humidLB.text = "Humid: \(currentData.currently.humidity)"
                 self.visibilityLB.text = "Wind: \(currentData.currently.windSpeed) km/h"
                 self.feelLB.text = "Feels: \(currentData.currently.apparentTemperature)°F"
-                self.uvIndexLB.text = "UVIndex \(currentData.currently.uvIndex)"
+            //    self.uvIndexLB.text = "UVIndex \(currentData.currently.uvIndex)"
                 self.summaryLB.text = " \(currentData.currently.summary)"
                 self.weatherImageView.image = UIImage(named:currentData.currently.icon )
                 
