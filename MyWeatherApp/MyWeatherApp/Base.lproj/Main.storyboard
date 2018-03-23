@@ -187,7 +187,7 @@
                                                 <constraint firstAttribute="height" constant="36" id="SsC-Za-28x"/>
                                                 <constraint firstAttribute="width" constant="84" id="TG5-jn-IJ1"/>
                                             </constraints>
-                                            <state key="normal" title="Button" image="off"/>
+                                            <state key="normal" title="Button" image="on"/>
                                             <connections>
                                                 <action selector="showData:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KsP-aA-Gki"/>
                                             </connections>
@@ -256,7 +256,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="off" width="1024" height="1024"/>
+        <image name="on" width="512" height="512"/>
         <image name="sunnyBG" width="275" height="183"/>
     </resources>
 </document>

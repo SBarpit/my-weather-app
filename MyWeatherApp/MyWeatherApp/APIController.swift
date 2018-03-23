@@ -42,8 +42,21 @@ class APIController  {
                 fail(error!)
             }else{
                 do {
+                    let s = String(data: data!, encoding: String.Encoding.ascii)
+                    print(s)
                     self.places = try JSONDecoder().decode(Places.self, from: data!)
+                    if self.places.status == "ZERO_RESULTS" {
+                        DispatchQueue.main.async {
+                             Alerts.displayAlertMessage(messageToDisplay: "Please check the location !")
+                        }
+                    }
+                        else if self.places.status == "INVALID_REQUEST"{
+                        DispatchQueue.main.async {
+                            Alerts.displayAlertMessage(messageToDisplay: "Invalid place !")
+                        }
+                    }else{
                     success(self.places)
+                    }
                 }
                 catch {
                     print("Error")

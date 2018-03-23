@@ -78,7 +78,8 @@ extension ViewController:UISearchBarDelegate{
         let newString = querry?.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
         
         APIController().weather(newString!, fail: { (e) in
-            print("Error : \(e)")
+            Alerts.displayAlertMessage(messageToDisplay: "Error \(e)")
+//            print("Error : \(e)")
         }) { (currentData) in
             self.tb = currentData
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
@@ -90,7 +91,10 @@ extension ViewController:UISearchBarDelegate{
                 self.humidLB.text = "Humid: \(currentData.currently.humidity)"
                 self.visibilityLB.text = "Wind: \(currentData.currently.windSpeed) km/h"
                 self.feelLB.text = "Feels: \(currentData.currently.apparentTemperature)°F"
-                self.uvIndexLB.text = "UVIndex \(currentData.currently.uvIndex)"
+                if currentData.currently.uvIndex != nil {
+                    self.uvIndexLB.text = "UVIndex \(String(describing: currentData.currently.uvIndex!))"
+                    print(currentData.currently.uvIndex)
+                }
                 self.summaryLB.text = " \(currentData.currently.summary)"
                 self.weatherImageView.image = UIImage(named:currentData.currently.icon )
                 self.show.isHidden = false
@@ -99,10 +103,15 @@ extension ViewController:UISearchBarDelegate{
                 
                 if currentData.currently.icon == "clear-day" || currentData.currently.icon == "snow"{
                     self.weatherImageView.layer.removeAllAnimations()
+                    self.view.layer.removeAllAnimations()
+                    self.view.layoutIfNeeded()
+                        
                     self.rotationAnimation()
                 }
-                else if currentData.currently.icon == "fog" ||  currentData.currently.icon == "partly-cloudy-day" || currentData.currently.icon == "clear-night" {
+                else if currentData.currently.icon == "fog" ||  currentData.currently.icon == "partly-cloudy-day" || currentData.currently.icon == "clear-night" || currentData.currently.icon == "partly-cloudy-night"{
                     self.weatherImageView.layer.removeAllAnimations()
+                    self.view.layer.removeAllAnimations()
+                    self.view.layoutIfNeeded()
                     self.zigzagAnimation()
                 }
                 
@@ -163,6 +172,7 @@ extension ViewController{
         self.weatherImageView.startAnimating()
         UIView.animate(withDuration: 1.0, delay: 0.2, options: [.curveEaseIn, .repeat, .autoreverse], animations: {
             self.weatherImageView.frame.origin.x = -5
+            
         }) { (false) in
         }
     }

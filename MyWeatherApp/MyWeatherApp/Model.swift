@@ -13,6 +13,7 @@ import Foundation
 
 struct Places:Decodable{
     var results : [Results]
+    var status:String
 }
 
 struct Results:Decodable {
@@ -43,7 +44,7 @@ struct Currently : Decodable {
     var apparentTemperature:Float
     var humidity:Float
     var windSpeed:Float
-    var uvIndex:Float
+    var uvIndex:Float?
     var icon:String
 }
 
