@@ -8,7 +8,7 @@
 
 import Foundation
 
-// MARK: MODEL for getting location cordinates
+// MARK: MODEL for getting location coordinates
 
 
 struct Places:Decodable{
@@ -32,6 +32,7 @@ struct Location:Decodable {
 
 struct Weather : Decodable {
     var currently : Currently
+    var hourly: Daily
 }
 
 struct Currently : Decodable {
@@ -42,6 +43,15 @@ struct Currently : Decodable {
     var apparentTemperature:Float
     var humidity:Float
     var windSpeed:Float
-    //var uvIndex:Float 
+    var uvIndex:Float
+    var icon:String
+}
+
+struct Daily:Decodable {
+    var data: [Datas]
+}
+
+struct Datas:Decodable {
+    var temperature:Float
     var icon:String
 }

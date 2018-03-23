@@ -81,8 +81,8 @@ class APIController  {
                     fail("Error in Weather fetching")
                 }else{
                     guard let  data = data else { return }
-                    let s:String = String(data: data, encoding: String.Encoding.ascii)!
-                    print(s)
+//                    let s:String = String(data: data, encoding: String.Encoding.ascii)!
+//                    print(s)
                     do {
                         self.location = try JSONDecoder().decode(Weather.self, from: data)
                         success(self.location)
