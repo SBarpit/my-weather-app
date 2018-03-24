@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import ANLoader
+
 
 class ViewController: UIViewController {
     
@@ -76,7 +78,7 @@ extension ViewController:UISearchBarDelegate{
         
         let querry = self.searchBar.text
         let newString = querry?.replacingOccurrences(of: " ", with: "+", options: .literal, range: nil)
-        
+        ANLoader.showLoading("Fetching !!", disableUI: false)
         APIController().weather(newString!, fail: { (e) in
             Alerts.displayAlertMessage(messageToDisplay: "Error \(e)")
 //            print("Error : \(e)")
@@ -93,7 +95,7 @@ extension ViewController:UISearchBarDelegate{
                 self.feelLB.text = "Feels: \(currentData.currently.apparentTemperature)°F"
                 if currentData.currently.uvIndex != nil {
                     self.uvIndexLB.text = "UVIndex \(String(describing: currentData.currently.uvIndex!))"
-                    print(currentData.currently.uvIndex)
+                    print(currentData.currently.uvIndex as! Float)
                 }
                 self.summaryLB.text = " \(currentData.currently.summary)"
                 self.weatherImageView.image = UIImage(named:currentData.currently.icon )
@@ -105,7 +107,6 @@ extension ViewController:UISearchBarDelegate{
                     self.weatherImageView.layer.removeAllAnimations()
                     self.view.layer.removeAllAnimations()
                     self.view.layoutIfNeeded()
-                        
                     self.rotationAnimation()
                 }
                 else if currentData.currently.icon == "fog" ||  currentData.currently.icon == "partly-cloudy-day" || currentData.currently.icon == "clear-night" || currentData.currently.icon == "partly-cloudy-night"{
@@ -114,6 +115,7 @@ extension ViewController:UISearchBarDelegate{
                     self.view.layoutIfNeeded()
                     self.zigzagAnimation()
                 }
+                ANLoader.hide()
                 
             })
             
